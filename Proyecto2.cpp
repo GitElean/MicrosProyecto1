@@ -21,9 +21,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
+
 int main(void)
 {
     printf("----- PROYECTO #2 - Microprocesadores -----\n");
+
+    Graph grafo(2);
+
+    grafo.addEdge(5, 3);
+    grafo.addEdge(5, 4);
 
     return 0;
 }
