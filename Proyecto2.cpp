@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
+//#include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
 
 int menu()
 {
@@ -35,7 +35,7 @@ int menu()
 
     opcion = 0;
     
-    scanf("%d",opcion);
+    scanf("%d",&opcion);
 
     int num;
     int agregar;
@@ -44,9 +44,9 @@ int menu()
     {
     case 1:
     //se busca un numero en el arbol
-        printf("\nIngrese el numero que desea buscar");
+        printf("\nIngrese el numero que desea buscar\n");
         num =0;
-        scanf("%d",num);
+        scanf("%d",&num);
         break;
 
     case 2:
@@ -55,7 +55,7 @@ int menu()
 
     case 3:
         //se le agrega un numero al arbol
-        printf("\nIngrese el numero que desea agregar");
+        printf("\nIngrese el numero que desea agregar\n");
         agregar = 0;
         scanf("%d",agregar);
         break;
@@ -80,12 +80,12 @@ int main(void)
 {
     printf("----- PROYECTO #2 - Microprocesadores -----\n");
 
-    printf("%d",menu());
-
+    printf("%s",menu());
+/*
     Graph grafo(2);
 
     grafo.addEdge(5, 3);
     grafo.addEdge(5, 4);
-
+*/
     return 0;
 }
