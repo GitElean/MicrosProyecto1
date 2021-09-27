@@ -25,15 +25,22 @@
 
 void menu()
 {
-    Graph grafo(4);
-    grafo.addEdge(0, 1);
-    grafo.addEdge(0, 2);
+    Graph grafo(17);
     grafo.addEdge(1, 2);
-    grafo.addEdge(2, 0);
     grafo.addEdge(2, 3);
-    grafo.addEdge(3, 3);
-
-    cout << "TEST: " << grafo.bfs(2) << endl;
+    grafo.addEdge(2, 13);
+    grafo.addEdge(3, 4);
+    grafo.addEdge(3, 12);
+    grafo.addEdge(4, 5);
+    grafo.addEdge(4, 7);
+    grafo.addEdge(5, 6);
+    grafo.addEdge(7, 8);
+    grafo.addEdge(7, 10);
+    grafo.addEdge(8, 9);
+    grafo.addEdge(10, 11);
+    grafo.addEdge(13, 14);
+    grafo.addEdge(14, 15);
+    grafo.addEdge(14, 16);
 
     bool test = false;
     do
@@ -60,6 +67,7 @@ void menu()
             printf("\nIngrese el numero que desea buscar\n");
             num = 0;
             scanf("%d",&num);
+            cout << grafo.bfs(num) << endl;
             break;
 
         case 2:
@@ -89,8 +97,7 @@ void menu()
 
 int main(void)
 {
-    printf("----- PROYECTO #2 - Microprocesadores -----\n");
-    
+    printf("----- PROYECTO #2 - Microprocesadores -----\n");    
     menu();
 
     return 0;
