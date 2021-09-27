@@ -15,6 +15,7 @@
 * Programación de Microprocesadores - Sección 20
 ---------------------------------------------------------------------------*/
 
+#include <bits/stdc++.h>
 #include <iostream>
 #include <list>
 
@@ -37,21 +38,18 @@ public:
 	
 		//Lista de adyacencia
 		adj = new list<int>[pVert];
-
-		cout << "Grafo crado" << endl;
 	}
 	
 	//metodo para añadir una arista
 	void addEdge(int v, int v2)//v = vertice 1, v2 = vertice 2
 	{
-		cout << "Rev 1" << endl;
 		adj[v].push_back(v2);
-		cout << "Rev 2" << endl;
 	}
 
 	//metodo de fuente del grafo
-	void bfs(int s)
+	string bfs(int s)
 	{
+		string information = "";
 		//ningun vertice a sido recorrido
 		bool *visited = new bool[vert];
 		for(int i = 0; i < vert; i++){
@@ -68,18 +66,20 @@ public:
 		//sigue hasta que la cola este vacia
 		while(!queue.empty()){
 			s = queue.front();
+			information += to_string(s) + " ";
 			queue.pop_front();
 		
-			cout<< "Revisando los vertices adyacentes"<< s << endl;
+			// cout<< "Revisando los vertices adyacentes"<< s << endl;
 			for(auto i = adj[s].begin(); i != adj[s].end(); i++){
 			//solo los nodos que no han sido recorridos
 				if(!visited[*i]){
-					cout<<"nodo visitado"<< *i << endl;
+					// cout<<"nodo visitado"<< *i << endl;
 					visited[*i] = true;
 			
 					queue.push_back(*i);
 				}
 			}		
 		}	
+		return information;
 	}
 };
