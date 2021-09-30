@@ -14,12 +14,10 @@
 * Universidad del Valle de Guateamala
 * Programación de Microprocesadores - Sección 20
 ---------------------------------------------------------------------------*/
- 
+
+#include <iostream>
 #include <stdio.h>
-#include <string.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <unistd.h>
+
 
 #include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
 
