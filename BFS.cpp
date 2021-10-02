@@ -10,13 +10,13 @@
 using namespace std;
 #define NTHREADS 17
 
+pthread_mutex_t pruebaLock;
 
 struct Check
 {
 	int i;
 	list<int> queue;
-	bool *visited ;
-	pthread_mutex_t lock;
+	bool *visited ;	
 };
 
 struct Check testG;
@@ -25,9 +25,8 @@ void* checkAdj(void *arg)
 {
 	struct Check *checking;
 	checking = (struct Check *)arg;
-	pthread_mutex_t lock = checking -> lock;
 
-	//pthread_mutex_lock(&lock);
+	//pthread_mutex_lock(&pruebaLock);
 
 	int i = checking -> i;
 	int* ptr_i = &i;
@@ -40,8 +39,10 @@ void* checkAdj(void *arg)
 		queue.push_back(*ptr_i);
 	}
 
-	//pthread_mutex_unlock(&lock);		
 	testG.queue = queue;	
+	testG.visited = &visited;
+
+	//pthread_mutex_lock(&pruebaLock);		
 
 	return (void*)1;
 }
@@ -55,7 +56,7 @@ private:
 	list<int>* adj;
 
 	// Preprar cancelar	
-	pthread_mutex_t lock;
+	pthread_mutex_t pruebaLock;
 		
 public:
 	//constructor
@@ -73,8 +74,6 @@ public:
 	{
 		adj[v].push_back(v2);
 	}
-
-	
 
 	//metodo de fuente del grafo
 	string bfs(int s)
@@ -104,7 +103,7 @@ public:
 		pthread_t tid;
 		int createTreads;		
 
-		if(pthread_mutex_init(&lock, NULL) != 0)
+		if(pthread_mutex_init(&pruebaLock, NULL) != 0)
 		{
 			return "ERROR: La inicializacion de mutex fallo";
 		}
@@ -122,16 +121,16 @@ public:
 			//solo los nodos que no han sido recorridos
 				check.i = *i;
 				
-				createTreads = pthread_create(&tid, NULL, checkAdj, (void *)&check);
-				
-				pthread_join(tid, &returned);
+				createTreads = pthread_create(&tid, NULL, checkAdj, (void *)&check);						
 
-				//queue = (Check)returned;
-				queue = testG.queue;
+				pthread_join(tid, &returned);										
+
+				visited = testG.visited;
+				queue = testG.queue;		
 			}		
 		}	
 
-		pthread_mutex_destroy(&lock);
+		pthread_mutex_destroy(&pruebaLock);
 
 		return information;
 	}
