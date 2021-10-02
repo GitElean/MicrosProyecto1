@@ -8,6 +8,7 @@ private:
 	Tree* leftN;
 	//Nodo derecho
 	Tree* rightN;
+	Tree* root;
 
 public:
 	
@@ -17,6 +18,7 @@ public:
 		leftN = NULL;
 		//Nodo derecho
 		rightN = NULL;
+		root = NULL;
 	}	
 
 	//constructor
@@ -27,6 +29,7 @@ public:
 		leftN = NULL;
 		//Nodo derecho
 		rightN = NULL;
+		root = NULL;
 	}
 	
 	int TreeHeight(Tree* root)
@@ -43,11 +46,13 @@ public:
 		
 		if(leftH > rightH)
 			return (leftH + 1);
-		else return (rightN + 1);
+			
+		else
+		    return (rightN + 1);
 	    }
     }
 	
-    void addNode(Tree* nodeAdded) {
+	void addNode(Tree * nodeAdded) {
     if (root == NULL) 
     {
       root = nodeAdded;
@@ -58,7 +63,7 @@ public:
       while (tROOT != NULL) {
 		  //chequea si el nodo que se desea ser anadido al arbol es menor que el valor apuntado y
 		  //si existe espacio para añadirlo, un espacio nulo 
-		  else if ((nodeAdded -> data < tROOT -> data) && (tROOT -> leftN == NULL)) 
+		  if ((nodeAdded -> data < tROOT -> data) && (tROOT -> leftN == NULL)) 
 		  {
 			  //Asigna el nuevo elemento a un espacio de memoria
           tROOT -> leftN = nodeAdded;
@@ -86,5 +91,16 @@ public:
       }
     }
   } 
-  	
+  
+int main(void)
+{
+    
+    cout << addNode(6);
+
+    return 0;
 }
+  
+  
+  
+};
+
