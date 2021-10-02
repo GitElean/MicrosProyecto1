@@ -20,6 +20,7 @@
 
 
 #include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
+#include "bfsNodesTree.cpp"
 
 void menu()
 {

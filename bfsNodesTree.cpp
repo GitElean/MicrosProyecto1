@@ -1,5 +1,7 @@
 #include<iostream>
 
+using namespace std;
+
 class Tree {
 
 private: 
@@ -34,25 +36,25 @@ public:
 	
 	int TreeHeight(Tree* root)
 	{
-	// añadir nodos
-	// ver altura
-	// ver si está vacío
-	if (root == NULL)
-		return -1;
-	else{                     //Obtenerlo de otra forma        
+		// añadir nodos
+		// ver altura
+		// ver si está vacío
+		if (root == NULL)
+			return -1;
+		
 		int leftH = TreeHeight(root -> leftN);
 		             //Poner altura
 		int rightH = TreeHeight(root -> rightN);
 		
-		if(leftH > rightH)
-			return (leftH + 1);
-			
-		else
-		    return (rightN + 1);
-	    }
+		if(leftH > rightH){
+			return (leftH + 1);			
+		}
+
+		return (rightH + 1);				    		
     }
 	
-	void addNode(Tree * nodeAdded) {
+	void addNode(Tree * nodeAdded) 
+	{
     if (root == NULL) 
     {
       root = nodeAdded;
@@ -94,13 +96,12 @@ public:
   
 int main(void)
 {
-    
-    cout << addNode(6);
+    Tree raiz(1);
+
+    cout << "DONE" << endl;
 
     return 0;
 }
-  
-  
   
 };
 
