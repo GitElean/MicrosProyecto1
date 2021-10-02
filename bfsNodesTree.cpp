@@ -85,15 +85,15 @@ public:
           tROOT -> rightN = nodeAdded;
           break;
           }
-           
           else 
           {
           tROOT = tROOT -> rightN;
           }
       }
     }
-  } 
-  
+  }   
+};
+
 int main(void)
 {
     Tree raiz(1);
@@ -102,6 +102,3 @@ int main(void)
 
     return 0;
 }
-  
-};
-
