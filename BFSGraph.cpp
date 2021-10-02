@@ -1,6 +1,25 @@
+/*---------------------------------------------------------------------------
+* <h1> Proyecto 2 </h1>
+* <h2> Breath First Search (BFS) Clase del algoritmo </h2>
+*
+* <p> Implementación de Algoritmo BFS utilizando hilos </p>
+*
+* @author {
+*   Elean Rivas,
+*   Rebecca Smith,
+*   Sara Paguaga,
+*   Cristian Laynez
+* }
+* @date	6 - Septiembre - 2021
+* Universidad del Valle de Guateamala
+* Programación de Microprocesadores - Sección 20
+---------------------------------------------------------------------------*/
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <list>
+
+#include <iostream> 
 #include <stdio.h>
 #include <string.h>
 #include <pthread.h>
@@ -8,42 +27,39 @@
 #include <unistd.h>
 
 using namespace std;
-#define NTHREADS 17
 
+// variables globales
+list<int> theQueue;
+bool *visited;
 
 struct Check
 {
-	int i;
-	list<int> queue;
-	bool *visited ;
-	pthread_mutex_t lock;
+	int number;
 };
 
-struct Check testG;
+// Hilo mutex
+pthread_mutex_t theLock;
 
 void* checkAdj(void *arg)
 {
+	pthread_mutex_lock(&theLock);
+
 	struct Check *checking;
 	checking = (struct Check *)arg;
-	pthread_mutex_t lock = checking -> lock;
 
-	//pthread_mutex_lock(&lock);
+	int j = checking -> number;
+	int* i = &j;
+	
+	if(!visited[*i])
+	{
+		visited[*i] = true;
 
-	int i = checking -> i;
-	int* ptr_i = &i;
-	list<int> queue = checking -> queue;
-	bool visited = checking -> visited;
-
-	if(!visited[ptr_i]){
-		visited[ptr_i] = true;
-			
-		queue.push_back(*ptr_i);
+		theQueue.push_back(*i);
 	}
 
-	//pthread_mutex_unlock(&lock);		
-	testG.queue = queue;	
+	pthread_mutex_unlock(&theLock);
 
-	return (void*)1;
+	return (void *)1;
 }
 
 class Graph{
@@ -53,9 +69,6 @@ private:
 	
 	//puntero lista de adyacencia
 	list<int>* adj;
-
-	// Preprar cancelar	
-	pthread_mutex_t lock;
 		
 public:
 	//constructor
@@ -74,65 +87,49 @@ public:
 		adj[v].push_back(v2);
 	}
 
-	
-
 	//metodo de fuente del grafo
 	string bfs(int s)
 	{
-		string information = "XD:";
+		string information = "";
 		//ningun vertice a sido recorrido
-		bool *visited = new bool[vert];
+		visited = new bool[vert];
 		for(int i = 0; i < vert; i++){
 			visited[i] = false;
 		}
 	
-		//cola bfs
-		list<int> queue;
+		//cola bfs		
+		theQueue.clear();
 	
 		//empieza a marcar los vertices como visitados
 		visited[s] = true;
-		queue.push_back(s);
+		theQueue.push_back(s);		
 
-		// preparar informacion para la estructura
-		struct Check check;
-		check.queue = queue;
-		check.visited = visited;
-
+		// Implementación de hilos y mutex
+		pthread_t tid;
+		int createTreads;
 		void *returned;
 
-		// Para llevar a cabo la ejecución de hilos
-		pthread_t tid;
-		int createTreads;		
-
-		if(pthread_mutex_init(&lock, NULL) != 0)
+		if(pthread_mutex_init(&theLock, NULL) != 0)
 		{
 			return "ERROR: La inicializacion de mutex fallo";
 		}
-
+	
 		//sigue hasta que la cola este vacia
-		while(!queue.empty()){
-			s = queue.front();
+		while(!theQueue.empty()){
+			s = theQueue.front();
 			information += to_string(s) + " ";
-			cout << s << endl;
-			queue.pop_front();
+			theQueue.pop_front();
 		
 			// cout<< "Revisando los vertices adyacentes"<< s << endl;
-            
 			for(auto i = adj[s].begin(); i != adj[s].end(); i++){
-			//solo los nodos que no han sido recorridos
-				check.i = *i;
-				
-				createTreads = pthread_create(&tid, NULL, checkAdj, (void *)&check);
-				
-				pthread_join(tid, &returned);
+				struct Check check;
+				check.number = *i;
 
-				//queue = (Check)returned;
-				queue = testG.queue;
+				createTreads = pthread_create(&tid, NULL, checkAdj, (void *)&check);
+
+				pthread_join(tid, &returned);
 			}		
 		}	
-
-		pthread_mutex_destroy(&lock);
-
 		return information;
 	}
 };

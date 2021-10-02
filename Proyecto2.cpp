@@ -19,8 +19,8 @@
 #include <stdio.h>
 
 
-#include "BFS.cpp" // Llamar elementos del archivo "BFS.cpp"
-#include "bfsNodesTree.cpp"
+#include "BFSGraph.cpp" // Llamar elementos del archivo "BFS.cpp"
+//#include "bfsNodesTree.cpp"
 
 void menu()
 {
