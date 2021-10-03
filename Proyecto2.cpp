@@ -22,9 +22,11 @@
 #include "BFSGraph.cpp" // Llamar elementos del archivo "BFS.cpp"
 //#include "bfsNodesTree.cpp"
 
+void numberForNewVector(Graph grafo, int selected);
+
 void menu()
 {
-    Graph grafo(17);
+    Graph grafo(20);
     grafo.addEdge(1, 2);
     grafo.addEdge(2, 3);
     grafo.addEdge(2, 13);
@@ -45,11 +47,8 @@ void menu()
     do
     {
         int opcion;
-        clock_t start;
-        clock_t finish;
-        double TotalTime;        
 
-        printf("Elija una de las siguientes opciones\n");
+        printf("\nElija una de las siguientes opciones\n");
         printf("\n1. Buscar un numero en el arbol");
         printf("\n2. Desplegar el arbol");
         printf("\n3. Agregar un numero al arbol");
@@ -60,7 +59,6 @@ void menu()
         scanf("%d",&opcion);
 
         int num;
-        int agregar;
 
         switch (opcion)
         {
@@ -69,26 +67,44 @@ void menu()
             printf("\nIngrese el numero que desea buscar\n");
             num = 0;
             scanf("%d",&num);
-            start = clock();
-            cout << grafo.bfs(num) << endl;
-            finish = clock();
-            
-            TotalTime = difftime(finish, start) / CLOCKS_PER_SEC;
-            cout << "El tiempo que tomo en realizar la busqueda de forma paralela fue: ";
-            cout << TotalTime;
-            cout << "s \n";            
-            
+
+            (num > 0) ? cout << "\nResultado:\n" << grafo.bfs(num) << endl 
+                    : cout << "\nNo debes ingresar numeros menores a 0\n";            
             break;
 
         case 2:
             //se imprime el arbol asi re nice
+            cout << "\n" << grafo.bfs(1) << "\n" << endl;
             break;
 
         case 3:
             //se le agrega un numero al arbol
-            printf("\nIngrese el numero que desea agregar\n");            
-            cin >> agregar;
-            printf("\nEl numero es %d:\n", agregar);
+            char sNodo;
+            printf("\nIngrese el Nodo donde desee ingresar el nuevo numero: \n");            
+            printf("\na) Nodo #1\n");            
+            printf("\nb) Nodo #13\n");            
+            printf("\nc) Nodo #16\n");            
+            cin >> sNodo;
+
+            switch (sNodo)
+            {
+            case 'a':
+                numberForNewVector(grafo, 1);
+                break;
+
+            case 'b':
+                numberForNewVector(grafo, 13);
+                break;
+
+            case 'c':
+                numberForNewVector(grafo, 16);                
+                break;
+            
+            default:
+                printf("\nOpcion inválida");
+                break;
+            }    
+
             break;
 
         case 4:
@@ -104,6 +120,25 @@ void menu()
     
 }
 
+void numberForNewVector(Graph grafo, int selected)
+{
+    int agregar = 0;
+
+    do
+    {
+        printf("\nIngrese el numero que desea agregar\n");            
+        cin >> agregar;        
+
+        if(agregar <= selected && (selected == 1 or selected == 13) == true)
+        {
+            agregar = 0;
+            printf("Estos números son menores que el Nodo solicitado, porfavor implemente un valor mayor a %d", selected);
+        }
+
+    } while (agregar <= 0);
+
+    grafo.addEdge(selected, agregar);
+}
 
 int main(void)
 {
