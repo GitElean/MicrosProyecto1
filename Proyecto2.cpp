@@ -45,6 +45,9 @@ void menu()
     do
     {
         int opcion;
+        clock_t start;
+        clock_t finish;
+        double TotalTime;        
 
         printf("Elija una de las siguientes opciones\n");
         printf("\n1. Buscar un numero en el arbol");
@@ -66,7 +69,15 @@ void menu()
             printf("\nIngrese el numero que desea buscar\n");
             num = 0;
             scanf("%d",&num);
+            start = clock();
             cout << grafo.bfs(num) << endl;
+            finish = clock();
+            
+            TotalTime = difftime(finish, start) / CLOCKS_PER_SEC;
+            cout << "El tiempo que tomo en realizar la busqueda de forma paralela fue: ";
+            cout << TotalTime;
+            cout << "s \n";            
+            
             break;
 
         case 2:
