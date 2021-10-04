@@ -32,7 +32,7 @@ using namespace std;
 list<int> theQueue;
 bool *visited;
 
-struct Check
+struct Check // Para transportar el puntero del numero solicitado
 {
 	int number;
 };
@@ -40,6 +40,8 @@ struct Check
 // Hilo mutex
 pthread_mutex_t theLock;
 
+// Subrutina para llevar a cabo la parte critica del método BFS
+// Para identificar si el vertice ya fue visitado
 void* checkAdj(void *arg)
 {
 	pthread_mutex_lock(&theLock);
@@ -62,7 +64,7 @@ void* checkAdj(void *arg)
 	return (void *)1;
 }
 
-class Graph{
+class Graph{ // Clase grafo donde se ipmlementará todo lo necesario junto con BFS
 private:
 	//numero de vertices
 	int vert;
